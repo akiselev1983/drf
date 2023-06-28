@@ -1,15 +1,15 @@
-from rest_framework.response import Response
-from django.http import Http404
-from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView, get_object_or_404
+from rest_framework.mixins import DestroyModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.pagination import PageNumberPagination
+
+from .filters import car_filtered_queryset
 from .models import CarModel
 from .serializers import CarSerializer
-from rest_framework import status
-from django.db.models import Q
-from .filters import car_filtered_queryset
-from rest_framework.generics import get_object_or_404, GenericAPIView
-from rest_framework.mixins import ListModelMixin, UpdateModelMixin, DestroyModelMixin, RetrieveModelMixin
+
+
 class CarListView(GenericAPIView, ListModelMixin):
     serializer_class = CarSerializer
+    # pagination_class = PageNumberPagination
 
 
     def get_queryset(self):

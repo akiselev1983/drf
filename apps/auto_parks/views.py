@@ -1,11 +1,16 @@
+from django.http import Http404
+
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
+from rest_framework.response import Response
+
+from apps.cars.models import CarModel
+from apps.cars.serializers import CarSerializer
+
 from .models import AutoParkModel
 from .serializers import AutoParkSerializer
-from rest_framework.response import Response
-from apps.cars.serializers import CarSerializer
-from django.http import Http404
-from apps.cars.models import CarModel
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
+
+
 class AutoParkListCreateView(ListCreateAPIView):
     serializer_class = AutoParkSerializer
     queryset = AutoParkModel.objects.all()
