@@ -30,7 +30,8 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = []
 
-
+# Auth User
+AUTH_USER_MODEL = 'users.UserModel'
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'apps.cars',
     'apps.auto_parks',
     'core',
+    'apps.users',
 ]
 
 MIDDLEWARE = [

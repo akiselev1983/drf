@@ -1,19 +1,17 @@
-from rest_framework.generics import GenericAPIView, get_object_or_404
+from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import DestroyModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.pagination import PageNumberPagination
 
-from .filters import car_filtered_queryset
+from .filters import CarFilter
 from .models import CarModel
 from .serializers import CarSerializer
 
 
 class CarListView(GenericAPIView, ListModelMixin):
     serializer_class = CarSerializer
-    # pagination_class = PageNumberPagination
+    queryset = CarModel.objects.all()
+    filterset_class = CarFilter
 
-
-    def get_queryset(self):
-        return car_filtered_queryset(self.request.query_params)
 
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
