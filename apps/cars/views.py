@@ -1,6 +1,9 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import DestroyModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAdminUser
+
+from core.permission.is_superuser import IsSuperUser
 
 from .filters import CarFilter
 from .models import CarModel
@@ -9,17 +12,14 @@ from .serializers import CarSerializer
 
 class CarListView(GenericAPIView, ListModelMixin):
     serializer_class = CarSerializer
-    queryset = CarModel.objects.all()
+    queryset = CarModel.my_objects.all()
     filterset_class = CarFilter
+    permission_classes = (IsSuperUser,)
 
 
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-# def get(self, *args, **kwargs):
-    #     qs = car_filtered_queryset(self.request.query_params)
-    #     serializer = CarSerializer(qs, many=True)
-    #     return Response(serializer.data, status.HTTP_200_OK)
 
 class CarRetrieveUpdateDestroyView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin):
     serializer_class = CarSerializer

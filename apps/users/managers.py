@@ -17,10 +17,12 @@ class UserManager(BaseUserManager):
         extra_kwargs.setdefault('is_superuser', True)
         extra_kwargs.setdefault('is_active', True)
 
-        if extra_kwargs['is_staff']:
+        if not extra_kwargs['is_staff']:
             raise ValueError('Superuser must have is_staff')
-        if extra_kwargs['is_superuser']:
+        if not extra_kwargs['is_superuser']:
             raise ValueError('Superuser must have is_superuser')
 
         user = self.create_user(email, password, **extra_kwargs)
         return user
+    def all_with_profiles(self):
+        return self.select_related('profile')
