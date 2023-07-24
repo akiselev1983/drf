@@ -14,7 +14,7 @@ class CarListView(GenericAPIView, ListModelMixin):
     serializer_class = CarSerializer
     queryset = CarModel.my_objects.all()
     filterset_class = CarFilter
-    permission_classes = (IsSuperUser,)
+    permission_classes = (AllowAny,)
 
 
     def get(self, request, *args, **kwargs):
